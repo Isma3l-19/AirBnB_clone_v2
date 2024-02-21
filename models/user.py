@@ -1,37 +1,30 @@
 #!/usr/bin/python3
-"""This module defines a class User"""
-from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String
+"""Defines the User class."""
+from models.base_model import Base
+from models.base_model import BaseModel
+from sqlalchemy import Column
+from sqlalchemy import String
 from sqlalchemy.orm import relationship
-from hashlib import md5
-import models
-import os
 
 
 class User(BaseModel, Base):
-    """This class defines a user by various attributes"""
-    if models.storage_type == 'db':
-        __tablename__ = 'users'
-        email = Column(String(128), nullable=False)
-        password = Column(String(128), nullable=False)
-        first_name = Column(String(128), nullable=True)
-        last_name = Column(String(128), nullable=True)
-        places = relationship("Place", backref="user")
-        reviews = relationship("Review", backref="user")
-    else:
-        email = ""
-        password = ""
-        first_name = ""
-        last_name = ""
+    """Represents a user for a MySQL database.
 
-    def __init__(self, *args, **kwargs):
-        """initializes user"""
-        super().__init__(*args, **kwargs)
+    Inherits from SQLAlchemy Base and links to the MySQL table users.
 
-    def __setattr__(self, name, value):
-        """set attributes for the user"""
-        if name == "password":
-            super(User, self).__setattr__(name,
-                                          md5(value.encode()).hexdigest())
-        else:
-            super(User, self).__setattr__(name, value)
+    Attributes:
+        __tablename__ (str): The name of the MySQL table to store users.
+        email: (sqlalchemy String): The user's email address.
+        password (sqlalchemy String): The user's password.
+        first_name (sqlalchemy String): The user's first name.
+        last_name (sqlalchemy String): The user's last name.
+        places (sqlalchemy relationship): The User-Place relationship.
+        reviews (sqlalchemy relationship): The User-Review relationship.
+    """
+    __tablename__ = "users"
+    email = Column(String(128), nullable=False)
+    password = Column(String(128), nullable=False)
+    first_name = Column(String(128))
+    last_name = Column(String(128))
+    places = relationship("Place", backref="user", cascade="delete")
+    reviews = relationship("Review", backref="user", cascade="delete")
