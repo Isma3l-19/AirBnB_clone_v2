@@ -33,16 +33,10 @@ class FileStorage:
 
         """
 
-        if cls:
-            same_type = dict()
-
-            for key, obj in self.__objects.items():
-                if obj.__class__ == cls:
-                    same_type[key] = obj
-
-            return same_type
-
-        return self.__objects
+         if cls is None:
+            return self.__objects
+        else:
+            return {key: obj for key, obj in self.__objects.items() if isinstance(obj, cls)}
 
     def new(self, obj):
         """sets __object to given obj
@@ -76,12 +70,10 @@ class FileStorage:
     def delete(self, obj=None):
         """Delete obj from __objects if it's inside
         """
-        if obj:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-
-            if self.__objects[key]:
-                del self.__objects[key]
-                self.save()
+        if obj is not None:
+            obj_key = "{}.{}".format(type(obj).__name__, obj.id)
+            if obj_key in self.__objects:
+                del self.__objects[obj_key]
 
     def close(self):
         """Deserialize the JSON file to objects
