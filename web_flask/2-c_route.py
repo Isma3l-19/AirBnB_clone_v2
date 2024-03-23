@@ -1,31 +1,25 @@
 #!/usr/bin/python3
 """
-script using Flask to create a web application with three routes
+creating three routes using flask web framework
 """
 from flask import Flask, escape
 
-
 app = Flask(__name__)
 
-
-#Route to display "Hello HBNB!"
+#displaying 'Hello HBNB!'
 @app.route('/', strict_slashes=False)
 def hello():
     return 'Hello HBNB!'
 
-
-#Route to display "HBNB"
+#displaying HBNB
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
     return 'HBNB'
-
-
-#Route to display "C " followed by the value of the text variable
+#displaying c followed by a text
 @app.route('/c/<text>', strict_slashes=False)
-def display_text(text):
-    processed_text = escape(text).replace('_', ' ')
-    return f'C {processed_text}'
-
+def c(text):
+    text = text.replace('_', ' ')
+    return f'C {escape(text)}'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
