@@ -1,21 +1,25 @@
 #!/usr/bin/python3
 """
-Starts a Flask web application
+script using flask to create a web application with two routes specified
 """
 from flask import Flask
 
+
 app = Flask(__name__)
 
-# Route to display 'Hello HBNNB !'
+
+# Route to display "Hello HBNB!"
 @app.route('/', strict_slashes=False)
-def hello():
-    """
-    prints out the Hello HBNB!
-    """
+def hello_hbnb():
     return 'Hello HBNB!'
 
-if __name__ == "__main__":
-    """
-    run the flask app on 0.0.0.0, port 5000
-    """
+
+# Route to display "HBNB"
+@app.route('/hbnb', strict_slashes=False)
+def hbnb():
+    return 'HBNB'
+
+
+if __name__ == '__main__':
+    # Run the Flask app on 0.0.0.0, port 5000
     app.run(host='0.0.0.0', port=5000)
