@@ -1,0 +1,1 @@
+Web Frameworks - This project teaches us how to use Flask web framework to our daily web scripting
