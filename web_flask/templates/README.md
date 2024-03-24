@@ -1,0 +1,1 @@
+HTML/CSS files are stored here in the templates folder
